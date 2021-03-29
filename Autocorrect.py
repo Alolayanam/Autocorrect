@@ -49,3 +49,34 @@ print(f"Length of probability is {len(total_prob)}")
 print(f"Probability of ('long') is {total_prob['long']:.4f}" + '\n')
 
 
+# make a list of split words
+# (deletion function) return all possible words result from deleting one character from a given word
+def letter_delete(word, verbose=False):
+    letter_delete = []
+    split_letter = []
+    split_letter = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    letter_delete = [L + R[1:] for L, R in split_letter if R]
+    if verbose: print(f"input word : {word}, \nsplit_letter = {split_letter}, \nletter_delete = {letter_delete}")
+    return letter_delete
+
+delete_word_letter = letter_delete(word="car", verbose=True)
+print('\n')
+
+
+# (switch function) return all possible words of switching two letter from a given word
+def letter_switch(word, verbose=False):
+    letter_switch = []
+    split_letter = []
+
+    def f(L, R):
+        return L[:-1] + R[0] + L[-1] + R[1:]
+
+    split_letter = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    letter_switch = [f(L, R) for L, R in split_letter if L and R]
+    if verbose: print(f"Input word : {word} \nsplit_letter = {split_letter} \nswitch_l = {letter_switch}")
+    return letter_switch
+
+switch_word_letter = letter_switch(word="teh", verbose=True)
+print('\n')
+
+
