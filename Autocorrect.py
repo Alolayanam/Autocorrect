@@ -80,3 +80,48 @@ switch_word_letter = letter_switch(word="teh", verbose=True)
 print('\n')
 
 
+# (replace function) return all possible words with one replaced letter from a given word
+def letter_replace(word, verbose=False):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    replace_letter = []
+    split_letter = []
+    split_letter = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    replace_set = [L + C + R[1:] for L, R in split_letter if R for C in alphabet if C is not R[0]]
+    replace_letter = sorted(list(replace_set))
+
+    if verbose: print(f"Input word : {word} \nsplit_letter = {split_letter} \nreplace_letter {replace_letter}")
+    return replace_letter
+
+replace_letter = letter_replace(word='car', verbose=True)
+print('\n')
+
+
+# (insertion function) return all possible words with a letter inserted from a given word at each character
+def letter_insert(word, verbose=False):
+    alphabet = 'abcdefghijklmnopqrstuvwxyz'
+    insert_letter = []
+    split_letter = []
+    split_letter = [(word[:i], word[i:]) for i in range(len(word) + 1)]
+    insert_letter = [L + C + R for L, R in split_letter for C in alphabet]
+    if verbose: print(f"Input word : {word} \nsplit_letter = {split_letter} \ninsert_letter = {insert_letter}")
+    return insert_letter
+
+insert_letter = letter_insert(word='be', verbose=True)
+print('\n')
+
+
+# (editing function) return all possible edits, consisting of insert, delete, replace and switch
+def one_letter_edit(word, allow_switches=True):
+    edit_one_set = set()
+    edit_one_set = edit_one_set | set(letter_delete(word)) | set(letter_insert(word)) | set(letter_replace(word))
+    if allow_switches:
+        edit_one_set |= set(letter_switch(word))
+    return edit_one_set
+
+tmp_word = "be"
+tmp_edit_one_set = one_letter_edit(tmp_word)
+tmp_edit_one_l = sorted(list(tmp_edit_one_set))
+
+print(f"input word : {tmp_word} \nThe result of editing one letter: \n{tmp_edit_one_l}\n")
+print(f"The type of the returned object should be a set {type(tmp_edit_one_set)}")
+print(f"Number of outputs from editing one letter on word('be') is {len(one_letter_edit('be'))}")
