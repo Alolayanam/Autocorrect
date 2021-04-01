@@ -125,3 +125,20 @@ tmp_edit_one_l = sorted(list(tmp_edit_one_set))
 print(f"input word : {tmp_word} \nThe result of editing one letter: \n{tmp_edit_one_l}\n")
 print(f"The type of the returned object should be a set {type(tmp_edit_one_set)}")
 print(f"Number of outputs from editing one letter on word('be') is {len(one_letter_edit('be'))}")
+      
+      
+# return all the possible edits on a single word, and get two edits modification
+def two_letters_edit(word, allow_switches = True):
+    edit_two_set = set()
+    one_letter =  one_letter_edit(word, allow_switches)
+    for word in one_letter:
+        edit_two_set |= one_letter_edit(word,allow_switches)
+    return edit_two_set
+
+tmp_edit_two_set = two_letters_edit("b")
+tmp_edit_two_l = sorted(list(tmp_edit_two_set))
+print(f"Number of strings with edit distance of two: {len(tmp_edit_two_l)}")
+print(f"First 20 strings {tmp_edit_two_l[:20]}")
+print(f"Last 20 strings {tmp_edit_two_l[-20:]}")
+print(f"Number of strings that are 2 edit distances from 'be' is {len(two_letters_edit('be'))}")
+
